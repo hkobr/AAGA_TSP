@@ -124,7 +124,7 @@ public class DefaultTeam {
 					 * essai avec extension2 qui n'ajoute pas les points bleus
 					 */
 					extensionTmp = extension2(p, i, cycle, points, path);
-					if ((distanceTmp = distanceTotale(extensionTmp)) < distance) {
+					if ((distanceTmp = Evaluator.score(extensionTmp)) < distance) {
 						distance = distanceTmp;
 						extensionList = (ArrayList<Point>) extensionTmp.clone();
 						extensionPoint = p;
