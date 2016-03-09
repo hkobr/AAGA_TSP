@@ -14,7 +14,7 @@ public class DefaultTeam {
 
 		for (Point origin : hitPoints) {
 			ArrayList<Point> tmp = voyage(origin, points, hitPoints, path);
-			dist = distanceTotale(tmp);
+			dist = Evaluator.score(tmp);
 			if (dist < distMin) {
 				distMin = dist;
 				list = tmp;
@@ -94,7 +94,6 @@ public class DefaultTeam {
 		cycle.add(origin);
 		HashSet<Point> visites = new HashSet<>(hitPoints.size());
 		visites.add(origin);
-		ArrayList<Point> chemin = null;
 		while (visites.size() < hitPoints.size()) {
 			cycle = voyage(cycle, points, hitPoints, visites, path);
 		}
