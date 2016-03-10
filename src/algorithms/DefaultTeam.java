@@ -9,8 +9,12 @@ public class DefaultTeam {
 		PlusCourtChemin pcc = new PlusCourtChemin(points, edgeThreshold);
 		int[][] path = calculPlusCourtsChemins(points, edgeThreshold);
 
-		double distMin = Double.MAX_VALUE, dist;
+		double distMin = Double.POSITIVE_INFINITY, dist;
 		ArrayList<Point> list = null;
+
+		if (new HashSet<Point>(hitPoints).size() < hitPoints.size()) {
+			System.out.println("Il y a un point en double !!!");
+		}
 
 		for (Point origin : hitPoints) {
 			ArrayList<Point> tmp = voyage(origin, points, hitPoints, path);
@@ -21,7 +25,7 @@ public class DefaultTeam {
 			}
 		}
 
-		//System.out.println("Ancienne taille : " + distanceTotale(list));
+		// System.out.println("Ancienne taille : " + distanceTotale(list));
 		list = ajoutPointsBleus(list, points, pcc);
 		return list;
 	}
@@ -32,7 +36,7 @@ public class DefaultTeam {
 			if (tmp.equals(p))
 				return i;
 		}
-		//System.out.println("Point " + p.toString() + " not in list !!");
+		// System.out.println("Point " + p.toString() + " not in list !!");
 		return -1;
 	}
 
@@ -94,15 +98,10 @@ public class DefaultTeam {
 		cycle.add(origin);
 		HashSet<Point> visites = new HashSet<>(hitPoints.size());
 		visites.add(origin);
-		while (visites.size() < hitPoints.size()) {
+		while (!visites.containsAll(hitPoints)) {
 			cycle = voyage(cycle, points, hitPoints, visites, path);
 		}
 
-		for (Point p : visites) {
-			if (!hitPoints.contains(p)) {
-				System.out.println("Grosse ERREUR");
-			}
-		}
 		return cycle;
 	}
 
@@ -133,6 +132,7 @@ public class DefaultTeam {
 			}
 		}
 		visites.add(extensionPoint);
+
 		return extensionList;
 
 	}
